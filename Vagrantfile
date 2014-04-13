@@ -5,12 +5,6 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = 'catatsuy/wheezy'
-  config.vm.network :public_network, :ip => "192.168.1.106", :netmask => "255.255.0.0", :bridge => "en0: Wi-Fi (AirPort)"
-  config.vm.provider "virtualbox" do |vb|
-    vb.gui = false
-    vb.customize ["modifyvm", :id, "--memory", "512"]
-  end
 
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -50,7 +44,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  config.ssh.username = "tett23"
   #
   # View the documentation for the provider you're using for more
   # information on available options.
@@ -115,4 +108,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+  config.vm.define :default do |d|
+    d.vm.box = 'catatsuy/wheezy'
+    d.vm.network :public_network, :ip => "192.168.1.106", :netmask => "255.255.0.0", :bridge => "en0: Wi-Fi (AirPort)"
+    d.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+  config.vm.define :dev1 do |dev|
+    dev.vm.box = 'catatsuy/wheezy'
+    dev.vm.network :public_network, :ip => "192.168.1.107", :netmask => "255.255.0.0", :bridge => "en0: Wi-Fi (AirPort)"
+    dev.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #dev.ssh.username = "tett23"
+  end
+
 end
