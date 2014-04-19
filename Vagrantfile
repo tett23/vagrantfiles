@@ -108,9 +108,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
-  config.vm.define :default do |d|
+  config.vm.define :db1 do |d|
     d.vm.box = 'catatsuy/wheezy'
-    d.vm.network :public_network, :ip => "192.168.1.106", :netmask => "255.255.0.0", :bridge => "en0: Wi-Fi (AirPort)"
+    d.vm.network :public_network, :ip => "192.168.1.106"
+    d.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+  config.vm.define :app1 do |d|
+    d.vm.box = 'catatsuy/wheezy'
+    d.vm.network :public_network, :ip => "192.168.1.107", :netmask => "255.255.0.0", :bridge => "en0: Wi-Fi (AirPort)"
     d.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.customize ["modifyvm", :id, "--memory", "512"]
@@ -118,7 +126,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   config.vm.define :dev1 do |dev|
     dev.vm.box = 'catatsuy/wheezy'
-    dev.vm.network :public_network, :ip => "192.168.1.107", :netmask => "255.255.0.0", :bridge => "en0: Wi-Fi (AirPort)"
+    dev.vm.network :public_network, :ip => "192.168.1.108", :netmask => "255.255.0.0", :bridge => "en0: Wi-Fi (AirPort)"
     dev.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.customize ["modifyvm", :id, "--memory", "512"]
